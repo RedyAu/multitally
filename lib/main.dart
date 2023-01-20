@@ -1,4 +1,4 @@
-import 'package:feelworld_tally/pages/tally/all.dart';
+import 'package:feelworld_tally/pages/tally/all_cams.dart';
 import 'package:feelworld_tally/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
