@@ -1,3 +1,4 @@
+import 'package:feelworld_tally/pages/tally/single_cam.dart';
 import 'package:feelworld_tally/settings.dart';
 import 'package:feelworld_tally/pages/tally/cam_indicator.dart';
 import 'package:flutter/material.dart';
@@ -24,13 +25,24 @@ class AllCamsPage extends StatelessWidget {
         ],
       )),
       body: Consumer<SettingsProvider>(builder: (context, provider, child) {
-        return GridView.count(
-          physics: const NeverScrollableScrollPhysics(),
-          crossAxisCount: 2,
-          children: provider.cams.entries
-              .map((e) => CamIndicator(e.key, e.value))
-              .toList(),
-        );
+        return OrientationBuilder(builder: (context, orientation) {
+          return Flex(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              direction: (orientation == Orientation.landscape)
+                  ? Axis.horizontal
+                  : Axis.vertical,
+              children: provider.cams.entries
+                  .map((e) => Expanded(
+                        child: GestureDetector(
+                          onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => SingleCamPage(e.key))),
+                          child: CamIndicator(e.key, e.value,
+                              provider.descriptionForCam[e.value]),
+                        ),
+                      ))
+                  .toList());
+        });
       }),
     );
   }
