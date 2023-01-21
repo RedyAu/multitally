@@ -22,9 +22,11 @@ class CamIndicator extends StatelessWidget {
               Radius.circular(10),
             ),
             color: provider.indicatorTheme.backgroundFor[state]),
-        child: Center(
-            child: Text(camId,
-                style: provider.indicatorTheme.textStyleFor[state])),
+        child: FittedBox(
+          fit: BoxFit.fitHeight,
+          child:
+              Text(camId, style: provider.indicatorTheme.textStyleFor[state]),
+        ),
       );
     });
   }
