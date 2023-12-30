@@ -11,28 +11,27 @@ class IndicatorTheme {
   IndicatorTheme(this.backgroundFor, this.textStyleFor);
 }
 
-  const double camIdSize = 150;
-  const double nameSize = 50;
+const double camIdSize = 150;
+const double nameSize = 50;
 
 IndicatorTheme get indicatorTheme => IndicatorTheme({
-        CamState.live: Colors.red,
-        CamState.preview: Colors.green,
-        CamState.online: Colors.blueGrey,
-        CamState.offline: Colors.black12,
-      }, {
-        CamState.live:
-            const TextStyle(color: Colors.white, fontSize: camIdSize),
-        CamState.preview:
-            const TextStyle(color: Colors.white, fontSize: camIdSize),
-        CamState.online:
-            const TextStyle(color: Colors.white, fontSize: camIdSize),
-        CamState.offline:
-            const TextStyle(color: Colors.grey, fontSize: camIdSize),
-      });
+      CamState.live: Colors.red,
+      CamState.preview: Colors.green,
+      CamState.online: Colors.blueGrey,
+      CamState.offline: Colors.black12,
+    }, {
+      CamState.live: const TextStyle(color: Colors.white, fontSize: camIdSize),
+      CamState.preview:
+          const TextStyle(color: Colors.white, fontSize: camIdSize),
+      CamState.online:
+          const TextStyle(color: Colors.white, fontSize: camIdSize),
+      CamState.offline:
+          const TextStyle(color: Colors.grey, fontSize: camIdSize),
+    });
 
 class CamIndicator extends StatelessWidget {
   final CamState state;
-  final String camId;
+  final int camId;
   final String? camDescription;
 
   const CamIndicator(
@@ -58,7 +57,8 @@ class CamIndicator extends StatelessWidget {
             fit: BoxFit.scaleDown,
             child: Column(
               children: [
-                Text(camId, style: indicatorTheme.textStyleFor[state]),
+                Text((camId + 1).toString(),
+                    style: indicatorTheme.textStyleFor[state]),
                 if (camDescription != null)
                   Text(camDescription!,
                       style: indicatorTheme.textStyleFor[state]!

@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SettingsProvider extends ChangeNotifier {
   static bool _initialized = false;
   bool get initialized => _initialized;
+  Duration updateFrequency = const Duration(milliseconds: 500);
 
   Map<String, String> _descriptionForCam = {};
   Map<String, String> get descriptionForCam => _descriptionForCam;

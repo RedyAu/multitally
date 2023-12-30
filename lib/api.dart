@@ -12,6 +12,8 @@ class FConnection {
   FConnection(this.address, this.port);
 
   Future<void> connect() async {
+    socket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 0);
+
     // send a connect command and verify that the data fields are the same as sent
     var resp = (await get(FMessage(sequenceNumber++, FCommand.connect.c,
         FCommand.connect.sub['connect']!, '00', '00', '00')))[0];
@@ -21,12 +23,21 @@ class FConnection {
     if (resp.sequenceNumber != sequenceNumber - 1) {
       throw Exception('Invalid sequence number');
     }
+    print('Connected: ${resp.m}');
     return;
+  }
+
+  Future<List<int>> getRawState() async {
+    List<int> resp = (await get(
+        FMessage(sequenceNumber++, FCommand.status.c,
+            FCommand.status.sub['selected']!, '01', '00', '00'),
+        2))[1];
+    return [resp[0], resp[2]];
   }
 
   Future<List> get(FMessage message, [int amount = 1]) async {
     if (socket == null) {
-      throw Exception('Socket not connected');
+      socket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 0);
     }
     List messages = [];
     var completer = Completer<List>();
@@ -41,11 +52,20 @@ class FConnection {
         }
         if (messages.length == amount) {
           completer.complete(messages);
+          socket!.close();
+          socket = null;
         }
       }
     });
-
     socket!.send(ascii.encode(message.m), address, port);
+
+    Future.delayed(Duration(seconds: 3), () {
+      if (!completer.isCompleted) {
+        socket!.close();
+        socket = null;
+        completer.completeError(Exception('Connection timed out in 3 seconds'));
+      }
+    });
 
     return completer.future;
   }

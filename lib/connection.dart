@@ -3,51 +3,89 @@ import 'dart:math';
 
 import 'package:feelworld_tally/api.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'settings.dart';
 
 enum CamState { live, preview, online, offline }
 
 class ConnectionProvider extends ChangeNotifier {
-  FConnection? connection;
-
-  Map<String, CamState> _cams = {
-    "1": CamState.offline,
-    "2": CamState.offline,
-    "3": CamState.offline,
-    "4": CamState.offline,
-  };
-  Map<String, CamState> get cams => _cams;
-  set cams(Map<String, CamState> cams) {
-    _cams = cams;
-    notifyListeners();
+  BuildContext context;
+  late Duration updateFrequency;
+  ConnectionProvider(this.context) {
+    updateFrequency =
+        Provider.of<SettingsProvider>(context, listen: false).updateFrequency;
   }
 
+  FConnection? connection;
+  DateTime? lastUpdate;
+  bool ticker = false;
+  String? error = 'Not connected';
+  bool shouldDisconnect = false;
+
+  List<CamState> cams = List.generate(4, (index) => CamState.offline);
+
   Future<String?> connectTo(String? address) async {
+    shouldDisconnect = false;
+
     // Demo mode
     if (address == null) {
       Random random = Random();
       Future.doWhile(() async {
-        cams = {
-          "1": CamState.values[random.nextInt(4)],
-          "2": CamState.values[random.nextInt(4)],
-          "3": CamState.values[random.nextInt(4)],
-          "4": CamState.values[random.nextInt(4)],
-        };
-        await Future.delayed(const Duration(seconds: 1));
-        return true;
+        cams = List.generate(4, (index) => CamState.values[random.nextInt(4)]);
+
+        lastUpdate = DateTime.now();
+        ticker = !ticker;
+        notifyListeners();
+
+        await Future.delayed(updateFrequency);
+        return !shouldDisconnect;
       });
       return null;
     }
 
     // Real mode
-    var ipaddress = InternetAddress(address.split(':')[0]);
-    var port = int.tryParse(address.split(':')[1]) ?? 1000;
+    var parts = address.split(':');
+    var ipaddress = InternetAddress(parts[0]);
+    var port = parts.length > 1 ? int.parse(parts[1]) : 1000;
     connection = FConnection(ipaddress, port);
-    try {
-      await connection!.connect();
+    await connection!.connect();
+    notifyListeners();
+    Future.doWhile(() async {
+      await update();
+
+      lastUpdate = DateTime.now();
+      ticker = !ticker;
       notifyListeners();
-      return null;
+
+      await Future.delayed(updateFrequency);
+
+      return !shouldDisconnect;
+    });
+    return null;
+  }
+
+  update() async {
+    try {
+      var data = await connection!.getRawState();
+      int preview = data[0];
+      int live = data[1];
+
+      cams = List.generate(4, (index) => CamState.offline);
+      cams[preview] = CamState.preview;
+      cams[live] = CamState.live;
+      error = null;
     } catch (e) {
-      return e.toString();
+      error = e.toString();
+      notifyListeners();
     }
+  }
+
+  void disconnect() {
+    print("Disconnecting");
+    error = 'Not connected';
+    shouldDisconnect = true;
+    notifyListeners();
+    connection = null;
   }
 }

@@ -14,6 +14,8 @@ class ConnectPage extends StatefulWidget {
 
 class _ConnectPageState extends State<ConnectPage> {
   var controller = TextEditingController();
+  bool isConnecting = false;
+  String error = "";
 
   @override
   Widget build(BuildContext context) {
@@ -44,16 +46,37 @@ class _ConnectPageState extends State<ConnectPage> {
                     controller: controller,
                   ),
                   SizedBox(height: 16),
+                  if (error.isNotEmpty) ...[
+                    Text(error, style: TextStyle(color: Colors.red)),
+                    SizedBox(height: 16),
+                  ],
                   Row(
                     children: [
                       Expanded(
                         flex: 2,
                         child: FilledButton(
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => AllCamsPage()));
+                          onPressed: () async {
+                            setState(() {
+                              isConnecting = true;
+                            });
+                            try {
+                              await connection.connectTo(controller.text);
+                              setState(() {
+                                isConnecting = false;
+                                error = "";
+                              });
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => AllCamsPage()));
+                            } catch (e) {
+                              isConnecting = false;
+                              setState(() {
+                                error = '$e';
+                              });
+                            }
                           },
-                          child: Text("Connect"),
+                          child: isConnecting
+                              ? LinearProgressIndicator()
+                              : Text("Connect"),
                         ),
                       ),
                       SizedBox(width: 8),

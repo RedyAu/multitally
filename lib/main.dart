@@ -14,20 +14,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<SettingsProvider>(
-            create: (_) => SettingsProvider()),
-        ChangeNotifierProvider<ConnectionProvider>(
-            create: (_) => ConnectionProvider()),
-      ],
-      child: MaterialApp(
-        title: 'Feelworld Tally',
-        theme: ThemeData(
-          brightness: Brightness.dark,
-          useMaterial3: true,
+    return ChangeNotifierProvider<SettingsProvider>(
+      create: (_) => SettingsProvider(),
+      child: ChangeNotifierProvider<ConnectionProvider>(
+        create: (context) => ConnectionProvider(context),
+        child: MaterialApp(
+          title: 'Feelworld Tally',
+          theme: ThemeData(
+            brightness: Brightness.dark,
+            useMaterial3: true,
+          ),
+          home: const ConnectPage(),
         ),
-        home: const ConnectPage(),
       ),
     );
   }
