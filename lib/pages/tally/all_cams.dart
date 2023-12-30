@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wakelock/wakelock.dart';
 
+import '../../connection.dart';
+
 class AllCamsPage extends StatelessWidget {
   const AllCamsPage({super.key});
 
@@ -24,21 +26,22 @@ class AllCamsPage extends StatelessWidget {
           )
         ],
       )),
-      body: Consumer<SettingsProvider>(builder: (context, provider, child) {
+      body: Consumer2<SettingsProvider, ConnectionProvider>(
+          builder: (context, settings, connection, child) {
         return OrientationBuilder(builder: (context, orientation) {
           return Flex(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               direction: (orientation == Orientation.landscape)
                   ? Axis.horizontal
                   : Axis.vertical,
-              children: provider.cams.entries
+              children: connection.cams.entries
                   .map((e) => Expanded(
                         child: GestureDetector(
                           onTap: () => Navigator.of(context).push(
                               MaterialPageRoute(
                                   builder: (context) => SingleCamPage(e.key))),
                           child: CamIndicator(e.key, e.value,
-                              provider.descriptionForCam[e.value]),
+                              settings.descriptionForCam[e.value]),
                         ),
                       ))
                   .toList());

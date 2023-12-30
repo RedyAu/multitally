@@ -2,31 +2,33 @@ import 'package:feelworld_tally/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../connection.dart';
+import 'cam_indicator.dart';
+
 class SingleCamPage extends StatelessWidget {
   final String camId;
   const SingleCamPage(this.camId, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SettingsProvider>(builder: (context, provider, child) {
+    return Consumer2<SettingsProvider, ConnectionProvider>(
+        builder: (context, settings, connection, child) {
       return Scaffold(
         appBar: AppBar(
-          backgroundColor:
-              provider.indicatorTheme.backgroundFor[provider.cams[camId]],
+          backgroundColor: indicatorTheme.backgroundFor[connection.cams[camId]],
           title: TextFormField(
-            initialValue: provider.descriptionForCam[camId] ?? '',
-            onFieldSubmitted: (value) => provider.descriptionForCam
+            initialValue: settings.descriptionForCam[camId] ?? '',
+            onFieldSubmitted: (value) => settings.descriptionForCam
                 .update(camId, (_) => value, ifAbsent: () => value),
             decoration: const InputDecoration(hintText: 'Name your camera'),
           ),
           actions: [],
         ),
-        backgroundColor:
-            provider.indicatorTheme.backgroundFor[provider.cams[camId]],
+        backgroundColor: indicatorTheme.backgroundFor[connection.cams[camId]],
         body: Center(
           child: Text(
             camId,
-            style: provider.indicatorTheme.textStyleFor[provider.cams[camId]],
+            style: indicatorTheme.textStyleFor[connection.cams[camId]],
           ),
         ),
       );
