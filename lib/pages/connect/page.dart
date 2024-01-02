@@ -1,9 +1,9 @@
-import 'package:feelworld_tally/pages/tally/all_cams.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../connection.dart';
 import '../../settings.dart';
+import '../tally/all_cams.dart';
 
 class ConnectPage extends StatefulWidget {
   const ConnectPage({Key? key}) : super(key: key);

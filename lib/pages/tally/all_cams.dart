@@ -1,11 +1,11 @@
-import 'package:feelworld_tally/pages/tally/single_cam.dart';
-import 'package:feelworld_tally/settings.dart';
-import 'package:feelworld_tally/pages/tally/cam_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wakelock/wakelock.dart';
 
 import '../../connection.dart';
+import '../../settings.dart';
+import 'cam_indicator.dart';
+import 'single_cam.dart';
 
 class AllCamsPage extends StatefulWidget {
   const AllCamsPage({super.key});

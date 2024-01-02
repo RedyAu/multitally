@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:feelworld_tally/api.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'api.dart';
 import 'settings.dart';
 
 enum CamState { live, preview, online, offline }

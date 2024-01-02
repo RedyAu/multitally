@@ -1,5 +1,5 @@
-name: feelworld_tally
-description: A camera tally app for the Feelworld live mixers.
+name: multitally
+description: A camera tally app live video mixers.
 
 publish_to: 'none'
 

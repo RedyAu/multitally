@@ -1,9 +1,9 @@
-import 'package:feelworld_tally/pages/connect/page.dart';
-import 'package:feelworld_tally/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'connection.dart';
+import 'pages/connect/page.dart';
+import 'settings.dart';
 
 void main() {
   runApp(const MyApp());

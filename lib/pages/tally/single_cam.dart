@@ -1,8 +1,8 @@
-import 'package:feelworld_tally/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../connection.dart';
+import '../../settings.dart';
 import 'cam_indicator.dart';
 
 class SingleCamPage extends StatelessWidget {
