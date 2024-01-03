@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:multitally/settings.dart';
+import 'package:multitally/settings_provider.dart';
 import 'package:provider/provider.dart';
 
 class SettingsSection extends StatelessWidget {

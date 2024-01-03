@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../connection.dart';
-import '../../settings.dart';
+import '../../connection_provider.dart';
+import '../../settings_provider.dart';
 
 class IndicatorTheme {
   Map<CamState, Color> backgroundFor;

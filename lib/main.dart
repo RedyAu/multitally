@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'connection.dart';
+import 'connection_provider.dart';
 import 'pages/connect/page.dart';
-import 'settings.dart';
+import 'settings_provider.dart';
 
 void main() {
   runApp(const MyApp());

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:multitally/pages/connect/settings_section.dart';
 import 'package:provider/provider.dart';
 
-import '../../connection.dart';
-import '../../settings.dart';
+import '../../connection_provider.dart';
+import '../../settings_provider.dart';
 import '../tally/all_cams.dart';
 import 'about_section.dart';
 

@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'api.dart';
-import 'settings.dart';
+import 'settings_provider.dart';
 
 enum CamState { live, preview, online, offline }
 
