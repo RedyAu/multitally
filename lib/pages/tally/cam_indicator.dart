@@ -32,12 +32,12 @@ IndicatorTheme get indicatorTheme => IndicatorTheme({
 class CamIndicator extends StatelessWidget {
   final CamState state;
   final int camId;
-  final String? camDescription;
+  final String camName;
 
   const CamIndicator(
     this.camId,
     this.state,
-    this.camDescription, {
+    this.camName, {
     super.key,
   });
 
@@ -59,14 +59,49 @@ class CamIndicator extends StatelessWidget {
               children: [
                 Text((camId + 1).toString(),
                     style: indicatorTheme.textStyleFor[state]),
-                if (camDescription != null)
-                  Text(camDescription!,
+                if (camName.isNotEmpty)
+                  Text(camName,
                       style: indicatorTheme.textStyleFor[state]!
                           .copyWith(fontSize: nameSize))
               ],
             ),
           ),
         ),
+      );
+    });
+  }
+}
+
+class ConnectionIndicator extends StatelessWidget {
+  const ConnectionIndicator({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<ConnectionProvider>(builder: (context, connection, child) {
+      return Row(
+        children: [
+          // small green circle
+          Container(
+            width: 10,
+            height: 10,
+            margin: const EdgeInsets.only(right: 5),
+            decoration: BoxDecoration(
+              color: connection.ticker
+                  ? (connection.error != null ? Colors.red : Colors.green)
+                  : Colors.grey,
+              shape: BoxShape.circle,
+            ),
+          ),
+          (connection.error == null)
+              ? Text(
+                  "Connected: ${connection.connection?.address.address}",
+                  style: Theme.of(context).textTheme.bodySmall,
+                )
+              : Text(
+                  "${connection.error}",
+                  style: Theme.of(context).textTheme.bodySmall,
+                )
+        ],
       );
     });
   }

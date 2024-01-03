@@ -33,6 +33,15 @@ class SettingsProvider extends ChangeNotifier {
     _prefs.setString('address', value);
   }
 
+  List<String> _camNames = List.generate(4, (index) => '');
+  List<String> get camNames => _camNames;
+  set camNames(List<String> value) {
+    print(value);
+    _camNames = value;
+    notifyListeners();
+    _prefs.setStringList('camNames', value);
+  }
+
   void initialize(GlobalKey navigatorKey) async {
     _prefs = await SharedPreferences.getInstance();
     ScaffoldMessengerState scaffoldMessenger =
@@ -44,6 +53,7 @@ class SettingsProvider extends ChangeNotifier {
       updateFrequency = _updateFrequencySetting;
       _vibrateOnAir = _prefs.getBool('vibrateOnAir') ?? _vibrateOnAir;
       _address = _prefs.getString('address') ?? _address;
+      _camNames = _prefs.getStringList('camNames') ?? _camNames;
     } catch (e) {
       scaffoldMessenger.showSnackBar(SnackBar(
         content: Text(
@@ -53,6 +63,7 @@ class SettingsProvider extends ChangeNotifier {
         backgroundColor: Colors.red,
         showCloseIcon: true,
         closeIconColor: Colors.white,
+        behavior: SnackBarBehavior.floating,
         duration: Duration(minutes: 99),
       ));
     }

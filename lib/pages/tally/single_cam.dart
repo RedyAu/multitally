@@ -15,43 +15,34 @@ class SingleCamPage extends StatelessWidget {
         builder: (context, settings, connection, child) {
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: indicatorTheme.backgroundFor[connection.cams[camId]],
-          title: /*TextFormField(
-            initialValue: settings.descriptionForCam[camId] ?? '',
+          backgroundColor: Color.alphaBlend(
+              indicatorTheme.backgroundFor[connection.cams[camId]]!
+                  .withAlpha(170),
+              Theme.of(context).colorScheme.background),
+          title: TextFormField(
+            initialValue: settings.camNames[camId],
             onFieldSubmitted: (value) {
-              settings.descriptionForCam
-                .update(camId, (_) => value, ifAbsent: () => value);
+              var camNames = settings.camNames;
+              camNames[camId] = value;
+              settings.camNames = camNames;
             },
             decoration: const InputDecoration(hintText: 'Name your camera'),
-          ),*/
-              Row(
-            children: [
-              // small green circle
-              Container(
-                width: 10,
-                height: 10,
-                margin: const EdgeInsets.only(right: 5),
-                decoration: BoxDecoration(
-                  color: connection.ticker
-                      ? (connection.error != null ? Colors.red : Colors.green)
-                      : Colors.grey,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              (connection.error == null)
-                  ? Text(
-                      "Connected: ${connection.connection?.address.address}",
-                      style: Theme.of(context).textTheme.bodySmall,
-                    )
-                  : Text(
-                      "${connection.error}",
-                      style: Theme.of(context).textTheme.bodySmall,
-                    )
-            ],
           ),
           actions: [],
         ),
         backgroundColor: indicatorTheme.backgroundFor[connection.cams[camId]],
+        extendBody: true,
+        bottomNavigationBar: Row(
+          children: [
+            Card(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                child: ConnectionIndicator(),
+              ),
+              shape: StadiumBorder(),
+            ),
+          ],
+        ),
         body: Center(
           child: Text(
             (camId + 1).toString(),

@@ -41,34 +41,7 @@ class _AllCamsPageState extends State<AllCamsPage> {
         appBar: AppBar(
             title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text("All cameras"),
-            Row(
-              children: [
-                // small green circle
-                Container(
-                  width: 10,
-                  height: 10,
-                  margin: const EdgeInsets.only(right: 5),
-                  decoration: BoxDecoration(
-                    color: connection.ticker
-                        ? (connection.error != null ? Colors.red : Colors.green)
-                        : Colors.grey,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                (connection.error == null)
-                    ? Text(
-                        "Connected: ${connection.connection?.address.address}",
-                        style: Theme.of(context).textTheme.bodySmall,
-                      )
-                    : Text(
-                        "${connection.error}",
-                        style: Theme.of(context).textTheme.bodySmall,
-                      )
-              ],
-            )
-          ],
+          children: [const Text("All cameras"), const ConnectionIndicator(),],
         )),
         body: OrientationBuilder(builder: (context, orientation) {
           return Flex(
@@ -82,8 +55,8 @@ class _AllCamsPageState extends State<AllCamsPage> {
                   child: GestureDetector(
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => SingleCamPage(i))),
-                    child: CamIndicator(i, connection.cams[i],
-                        '' /*settings.descriptionForCam[i]*/), // TODO
+                    child: CamIndicator(
+                        i, connection.cams[i], settings.camNames[i]),
                   ),
                 );
               }).toList());
