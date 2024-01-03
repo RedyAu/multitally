@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "feelworld_tally" "\0"
+            VALUE "CompanyName", "pro.fodor" "\0"
+            VALUE "FileDescription", "MultiTally" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "feelworld_tally" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "feelworld_tally.exe" "\0"
-            VALUE "ProductName", "feelworld_tally" "\0"
+            VALUE "InternalName", "MultiTally" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 Benedek Fodor. All rights reserved." "\0"
+            VALUE "OriginalFilename", "MultiTally.exe" "\0"
+            VALUE "ProductName", "MultiTally" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

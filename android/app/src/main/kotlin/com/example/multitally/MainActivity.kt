@@ -1,4 +1,4 @@
-package com.example.feelworld_tally
+package pro.fodor.multitally
 
 import io.flutter.embedding.android.FlutterActivity
 
