@@ -27,6 +27,7 @@ class _MyAppState extends State<MyApp> {
         create: (_) => SettingsProvider()..initialize(navigatorKey),
         child: MaterialApp(
           navigatorKey: navigatorKey,
+          debugShowCheckedModeBanner: false,
           title: 'MultiTally',
           theme: ThemeData.from(
               colorScheme: ColorScheme.fromSeed(
