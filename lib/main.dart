@@ -19,11 +19,10 @@ class MyApp extends StatelessWidget {
       child: ChangeNotifierProvider<ConnectionProvider>(
         create: (context) => ConnectionProvider(context),
         child: MaterialApp(
-          title: 'Feelworld Tally',
-          theme: ThemeData(
-            brightness: Brightness.dark,
-            useMaterial3: true,
-          ),
+          title: 'MultiTally',
+          theme: ThemeData.from(
+              colorScheme: ColorScheme.fromSeed(
+                  seedColor: Colors.amber, brightness: Brightness.dark)),
           home: const ConnectPage(),
         ),
       ),
