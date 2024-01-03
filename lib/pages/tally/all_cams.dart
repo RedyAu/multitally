@@ -27,8 +27,9 @@ class _AllCamsPageState extends State<AllCamsPage> {
   @override
   void dispose() {
     Wakelock.disable();
-    _connectionProvider.disconnect();
     super.dispose();
+    Future.delayed(Duration.zero)
+        .then((value) => _connectionProvider.disconnect());
   }
 
   @override

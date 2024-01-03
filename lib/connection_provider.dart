@@ -13,7 +13,12 @@ class ConnectionProvider extends ChangeNotifier {
   DateTime? lastUpdate;
   bool ticker = false;
   String? error = 'Not connected';
-  bool shouldDisconnect = false;
+  bool _shouldDisconnect = false;
+  bool get shouldDisconnect => _shouldDisconnect;
+  set shouldDisconnect(bool value) {
+    _shouldDisconnect = value;
+    notifyListeners();
+  }
 
   List<CamState> cams = List.generate(4, (index) => CamState.offline);
 
@@ -32,6 +37,9 @@ class ConnectionProvider extends ChangeNotifier {
 
         await Future.delayed(Duration(milliseconds: updateFrequency));
         return !shouldDisconnect;
+      }).then((value) {
+        shouldDisconnect = false;
+        print("Demo done.");
       });
       return null;
     }
@@ -52,6 +60,9 @@ class ConnectionProvider extends ChangeNotifier {
 
       await Future.delayed(Duration(milliseconds: updateFrequency));
       return !shouldDisconnect;
+    }).then((value) {
+      shouldDisconnect = false;
+      print("Disconnected.");
     });
     return null;
   }
@@ -76,7 +87,6 @@ class ConnectionProvider extends ChangeNotifier {
     print("Disconnecting");
     error = 'Not connected';
     shouldDisconnect = true;
-    notifyListeners();
     connection = null;
   }
 }

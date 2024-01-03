@@ -74,13 +74,15 @@ class _ConnectPageState extends State<ConnectPage> {
                               Expanded(
                                 flex: 2,
                                 child: ElevatedButton(
-                                  onPressed: () {
-                                    connection.connectTo(null);
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                AllCamsPage()));
-                                  },
+                                  onPressed: connection.shouldDisconnect
+                                      ? null
+                                      : () {
+                                          connection.connectTo(null);
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AllCamsPage()));
+                                        },
                                   child: Text("Demo"),
                                 ),
                               ),
@@ -88,30 +90,32 @@ class _ConnectPageState extends State<ConnectPage> {
                               Expanded(
                                 flex: 3,
                                 child: FilledButton(
-                                  onPressed: () async {
-                                    setState(() {
-                                      isConnecting = true;
-                                    });
-                                    try {
-                                      await connection
-                                          .connectTo(controller.text);
-                                      setState(() {
-                                        isConnecting = false;
-                                        error = "";
-                                      });
-                                      settings.address = controller.text;
+                                  onPressed: connection.shouldDisconnect
+                                      ? null
+                                      : () async {
+                                          setState(() {
+                                            isConnecting = true;
+                                          });
+                                          try {
+                                            await connection
+                                                .connectTo(controller.text);
+                                            setState(() {
+                                              isConnecting = false;
+                                              error = "";
+                                            });
+                                            settings.address = controller.text;
 
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  AllCamsPage()));
-                                    } catch (e) {
-                                      isConnecting = false;
-                                      setState(() {
-                                        error = '$e';
-                                      });
-                                    }
-                                  },
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        AllCamsPage()));
+                                          } catch (e) {
+                                            isConnecting = false;
+                                            setState(() {
+                                              error = '$e';
+                                            });
+                                          }
+                                        },
                                   child: isConnecting
                                       ? LinearProgressIndicator()
                                       : Text("Connect"),
