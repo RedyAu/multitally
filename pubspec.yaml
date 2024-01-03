@@ -18,6 +18,7 @@ dependencies:
   async: ^2.11.0
   cancellation_token: ^2.0.1
   icons_launcher: ^2.1.6
+  vibration: ^1.7.7
 
 flutter:
   uses-material-design: true

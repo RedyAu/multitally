@@ -41,7 +41,7 @@ class _AllCamsPageState extends State<AllCamsPage> {
         appBar: AppBar(
             title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [const Text("All cameras"), const ConnectionIndicator(),],
+          children: [const Text("All inputs"), const ConnectionIndicator(),],
         )),
         body: OrientationBuilder(builder: (context, orientation) {
           return Flex(

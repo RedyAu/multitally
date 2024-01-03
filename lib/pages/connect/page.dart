@@ -55,7 +55,7 @@ class _ConnectPageState extends State<ConnectPage> {
                           ),
                           SizedBox(height: 16),
                           Text(
-                              "This is an unofficial Tally Light app for Feelworld devices.\nKnown to support: Feelworld L1, L2 Plus, RGBlink mini"),
+                              "This is an unofficial Tally Light app for devices made by Feelworld.\nKnown to support: Feelworld L1, L2 Plus, RGBlink mini"),
                           SizedBox(height: 16),
                           Text(
                               "Enter the IP address of the device you want to connect to:"),

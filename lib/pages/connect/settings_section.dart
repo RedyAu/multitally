@@ -13,7 +13,7 @@ class SettingsSection extends StatelessWidget {
           ListTile(
             title: Text('Vibrate on air'),
             subtitle: Text(
-                'In Singe Camera View, vibrate the device when the selected camera becomes on air'),
+                'In Singe Input View, vibrate the device when the selected input becomes on air'),
             trailing: Switch(
                 value: settings.vibrateOnAir,
                 onChanged: (v) {
@@ -26,16 +26,23 @@ class SettingsSection extends StatelessWidget {
                 'Higher frequency means more stress on the network and the video switcher.\nKeep in mind: Each tally device makes requests for itself!'),
             trailing: DropdownButton(
                 items: [
-                  DropdownMenuItem(child: Text('500 ms'), value: 500),
-                  DropdownMenuItem(child: Text('1 s'), value: 1000),
-                  DropdownMenuItem(child: Text('2 s'), value: 2000),
-                  DropdownMenuItem(child: Text('5 s'), value: 5000),
-                  DropdownMenuItem(child: Text('10 s'), value: 10000),
-                  DropdownMenuItem(child: Text('30 s'), value: 30000),
-                ],
+                  ['500 ms', 500],
+                  ['1 s', 1000],
+                  ['2 s', 2000],
+                  ['5 s', 5000],
+                  ['10 s', 10000],
+                  ['30 s', 30000],
+                ]
+                    .map(
+                      (e) => DropdownMenuItem(
+                        child: Text(e[0] as String),
+                        value: e[1],
+                      ),
+                    )
+                    .toList(),
                 value: settings.updateFrequencySetting,
                 onChanged: (v) {
-                  settings.updateFrequencySetting = v!;
+                  settings.updateFrequencySetting = v as int;
                 }),
           )
         ],
