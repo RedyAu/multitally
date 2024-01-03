@@ -25,24 +25,25 @@ class SettingsSection extends StatelessWidget {
             subtitle: Text(
                 'Higher frequency means more stress on the network and the video switcher.\nKeep in mind: Each tally device makes requests for itself!'),
             trailing: DropdownButton(
-                items: [
-                  ['500 ms', 500],
-                  ['1 s', 1000],
-                  ['2 s', 2000],
-                  ['5 s', 5000],
-                  ['10 s', 10000],
-                  ['30 s', 30000],
+                // records go brr
+                items: <(String, int)>[
+                  ('500 ms', 500),
+                  ('1 s', 1000),
+                  ('2 s', 2000),
+                  ('5 s', 5000),
+                  ('10 s', 10000),
+                  ('30 s', 30000),
                 ]
                     .map(
                       (e) => DropdownMenuItem(
-                        child: Text(e[0] as String),
-                        value: e[1],
+                        child: Text(e.$1),
+                        value: e.$2,
                       ),
                     )
                     .toList(),
                 value: settings.updateFrequencySetting,
                 onChanged: (v) {
-                  settings.updateFrequencySetting = v as int;
+                  settings.updateFrequencySetting = v!;
                 }),
           )
         ],
