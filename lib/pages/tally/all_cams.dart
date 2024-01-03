@@ -23,6 +23,7 @@ class _AllCamsPageState extends State<AllCamsPage> {
     _connectionProvider =
         Provider.of<ConnectionProvider>(context, listen: false);
   }
+
   @override
   void dispose() {
     Wakelock.disable();
@@ -81,8 +82,8 @@ class _AllCamsPageState extends State<AllCamsPage> {
                   child: GestureDetector(
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => SingleCamPage(i))),
-                    child: CamIndicator(
-                        i, connection.cams[i], settings.descriptionForCam[i]),
+                    child: CamIndicator(i, connection.cams[i],
+                        '' /*settings.descriptionForCam[i]*/), // TODO
                   ),
                 );
               }).toList());

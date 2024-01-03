@@ -9,16 +9,24 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+  @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<SettingsProvider>(
-      create: (_) => SettingsProvider(),
-      child: ChangeNotifierProvider<ConnectionProvider>(
-        create: (context) => ConnectionProvider(context),
+    return ChangeNotifierProvider<ConnectionProvider>(
+      create: (context) => ConnectionProvider(),
+      child: ChangeNotifierProvider<SettingsProvider>(
+        create: (_) => SettingsProvider()..initialize(navigatorKey),
         child: MaterialApp(
+          navigatorKey: navigatorKey,
           title: 'MultiTally',
           theme: ThemeData.from(
               colorScheme: ColorScheme.fromSeed(

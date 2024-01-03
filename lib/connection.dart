@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'api.dart';
 import 'settings.dart';
@@ -10,13 +9,6 @@ import 'settings.dart';
 enum CamState { live, preview, online, offline }
 
 class ConnectionProvider extends ChangeNotifier {
-  BuildContext context;
-  late Duration updateFrequency;
-  ConnectionProvider(this.context) {
-    updateFrequency =
-        Provider.of<SettingsProvider>(context, listen: false).updateFrequency;
-  }
-
   FConnection? connection;
   DateTime? lastUpdate;
   bool ticker = false;
@@ -38,7 +30,7 @@ class ConnectionProvider extends ChangeNotifier {
         ticker = !ticker;
         notifyListeners();
 
-        await Future.delayed(updateFrequency);
+        await Future.delayed(Duration(milliseconds: updateFrequency));
         return !shouldDisconnect;
       });
       return null;
@@ -58,8 +50,7 @@ class ConnectionProvider extends ChangeNotifier {
       ticker = !ticker;
       notifyListeners();
 
-      await Future.delayed(updateFrequency);
-
+      await Future.delayed(Duration(milliseconds: updateFrequency));
       return !shouldDisconnect;
     });
     return null;
