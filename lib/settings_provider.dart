@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 int updateFrequency = 1000;
 
 class SettingsProvider extends ChangeNotifier {
   late SharedPreferences _prefs;
+  late PackageInfo packageInfo;
+  PackageInfo get package => packageInfo;
+
   static bool _initialized = false;
   bool get initialized => _initialized;
 
@@ -43,11 +47,13 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   void initialize(GlobalKey navigatorKey) async {
-    _prefs = await SharedPreferences.getInstance();
     ScaffoldMessengerState scaffoldMessenger =
         ScaffoldMessenger.of(navigatorKey.currentContext!);
 
     try {
+      packageInfo = await PackageInfo.fromPlatform();
+
+      _prefs = await SharedPreferences.getInstance();
       _updateFrequencySetting =
           _prefs.getInt('updateFrequencySetting') ?? _updateFrequencySetting;
       updateFrequency = _updateFrequencySetting;

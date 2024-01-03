@@ -50,17 +50,19 @@ class _ConnectPageState extends State<ConnectPage> {
                               textAlign: TextAlign.center),
                           SizedBox(height: 32),
                           Text(
+                              "This is an unofficial Tally Light app for devices made by Feelworld.\nKnown to support: Feelworld L1, L2 Plus, RGBlink mini"),
+                          SizedBox(height: 16),
+                          Text(
                             "Connect",
                             style: Theme.of(context).textTheme.headlineSmall,
                           ),
                           SizedBox(height: 16),
                           Text(
-                              "This is an unofficial Tally Light app for devices made by Feelworld.\nKnown to support: Feelworld L1, L2 Plus, RGBlink mini"),
-                          SizedBox(height: 16),
-                          Text(
                               "Enter the IP address of the device you want to connect to:"),
                           TextField(
                             controller: controller,
+                            decoration:
+                                InputDecoration(hintText: '127.0.0.1:1000'),
                           ),
                           SizedBox(height: 16),
                           if (error.isNotEmpty) ...[

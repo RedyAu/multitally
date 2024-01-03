@@ -19,6 +19,10 @@ dependencies:
   cancellation_token: ^2.0.1
   icons_launcher: ^2.1.6
   vibration: ^1.7.7
+  package_info_plus: ^3.1.2
+  url_launcher: ^6.2.2
+  mailto: ^2.0.0
+  fading_edge_scrollview: ^4.0.0
 
 flutter:
   uses-material-design: true
