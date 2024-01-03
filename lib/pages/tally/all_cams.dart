@@ -41,26 +41,52 @@ class _AllCamsPageState extends State<AllCamsPage> {
         appBar: AppBar(
             title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [const Text("All inputs"), const ConnectionIndicator(),],
+          children: [
+            const Text("All inputs"),
+            const ConnectionIndicator(),
+          ],
         )),
-        body: OrientationBuilder(builder: (context, orientation) {
-          return Flex(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              direction: (orientation == Orientation.landscape)
-                  ? Axis.horizontal
-                  : Axis.vertical,
-              children:
-                  List<int>.generate(connection.cams.length, (i) => i).map((i) {
-                return Expanded(
-                  child: GestureDetector(
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SingleCamPage(i))),
-                    child: CamIndicator(
-                        i, connection.cams[i], settings.camNames[i]),
-                  ),
-                );
-              }).toList());
-        }),
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            OrientationBuilder(builder: (context, orientation) {
+              return Flex(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  direction: (orientation == Orientation.landscape)
+                      ? Axis.horizontal
+                      : Axis.vertical,
+                  children: List<int>.generate(connection.cams.length, (i) => i)
+                      .map((i) {
+                    return Expanded(
+                      child: GestureDetector(
+                        onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => SingleCamPage(i))),
+                        child: CamIndicator(
+                            i, connection.cams[i], settings.camNames[i]),
+                      ),
+                    );
+                  }).toList());
+            }),
+            IgnorePointer(
+              child: AnimatedOpacity(
+                opacity:
+                    (connection.error == null || connection.connection == null)
+                        ? 0
+                        : 1,
+                duration: Duration(milliseconds: 500),
+                child: Stack(
+                  children: [
+                    Container(color: Colors.black.withAlpha(150)),
+                    Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       );
     });
   }

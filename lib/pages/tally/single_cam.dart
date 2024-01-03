@@ -27,8 +27,8 @@ class _SingleCamPageState extends State<SingleCamPage> {
         connection.cams[widget.camId] == CamState.live &&
         prevCamState != CamState.live) {
       Vibration.vibrate(duration: 1000, amplitude: 255);
-      prevCamState = connection.cams[widget.camId];
     }
+    prevCamState = connection.cams[widget.camId];
     super.didChangeDependencies();
   }
 
@@ -44,6 +44,7 @@ class _SingleCamPageState extends State<SingleCamPage> {
           ),
           title: TextFormField(
             initialValue: settings.camNames[widget.camId],
+            style: TextStyle(fontSize: 18),
             onFieldSubmitted: (value) {
               var camNames = settings.camNames;
               camNames[widget.camId] = value;
@@ -59,12 +60,34 @@ class _SingleCamPageState extends State<SingleCamPage> {
         body: Stack(
           alignment: Alignment.topRight,
           children: [
-            Center(
-              child: Text(
-                (widget.camId + 1).toString(),
-                style:
-                    indicatorTheme.textStyleFor[connection.cams[widget.camId]],
-              ),
+            Stack(
+              fit: StackFit.expand,
+              children: [
+                Center(
+                  child: Text(
+                    (widget.camId + 1).toString(),
+                    style: indicatorTheme
+                        .textStyleFor[connection.cams[widget.camId]],
+                  ),
+                ),
+                IgnorePointer(
+                  child: AnimatedOpacity(
+                    opacity: (connection.error == null ||
+                            connection.connection == null)
+                        ? 0
+                        : 1,
+                    duration: Duration(milliseconds: 500),
+                    child: Stack(
+                      children: [
+                        Container(color: Colors.black.withAlpha(150)),
+                        Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
             Row(
               mainAxisSize: MainAxisSize.min,
