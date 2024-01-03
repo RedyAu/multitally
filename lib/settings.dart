@@ -25,6 +25,14 @@ class SettingsProvider extends ChangeNotifier {
     _prefs.setBool('vibrateOnAir', value);
   }
 
+  String _address = '';
+  String get address => _address;
+  set address(String value) {
+    _address = value;
+    notifyListeners();
+    _prefs.setString('address', value);
+  }
+
   void initialize(GlobalKey navigatorKey) async {
     _prefs = await SharedPreferences.getInstance();
     ScaffoldMessengerState scaffoldMessenger =
@@ -35,10 +43,17 @@ class SettingsProvider extends ChangeNotifier {
           _prefs.getInt('updateFrequencySetting') ?? _updateFrequencySetting;
       updateFrequency = _updateFrequencySetting;
       _vibrateOnAir = _prefs.getBool('vibrateOnAir') ?? _vibrateOnAir;
+      _address = _prefs.getString('address') ?? _address;
     } catch (e) {
       scaffoldMessenger.showSnackBar(SnackBar(
-        content: Text('Error loading settings: $e'),
+        content: Text(
+          'Error loading settings: $e',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.red,
+        showCloseIcon: true,
+        closeIconColor: Colors.white,
+        duration: Duration(minutes: 99),
       ));
     }
 

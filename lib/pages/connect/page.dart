@@ -15,9 +15,17 @@ class ConnectPage extends StatefulWidget {
 }
 
 class _ConnectPageState extends State<ConnectPage> {
-  var controller = TextEditingController();
+  TextEditingController controller = TextEditingController();
   bool isConnecting = false;
   String error = "";
+
+  @override
+  void didChangeDependencies() {
+    if (controller.text.isEmpty) {
+      controller.text = Provider.of<SettingsProvider>(context).address;
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +97,8 @@ class _ConnectPageState extends State<ConnectPage> {
                                         isConnecting = false;
                                         error = "";
                                       });
+                                      settings.address = controller.text;
+
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
