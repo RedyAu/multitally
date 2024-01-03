@@ -21,7 +21,7 @@ class SettingsSection extends StatelessWidget {
                 }),
           ),
           ListTile(
-            title: Text('Update frequency'),
+            title: Text('Time between updates'),
             subtitle: Text(
                 'Higher frequency means more stress on the network and the video switcher.\nKeep in mind: Each tally device makes requests for itself!'),
             trailing: DropdownButton(
