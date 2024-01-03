@@ -1,5 +1,5 @@
 name: multitally
-description: A camera tally app live video mixers.
+description: A camera tally app for live video mixers.
 
 publish_to: 'none'
 
@@ -17,6 +17,24 @@ dependencies:
   shared_preferences: ^2.0.17
   async: ^2.11.0
   cancellation_token: ^2.0.1
+  icons_launcher: ^2.1.6
 
 flutter:
   uses-material-design: true
+
+icons_launcher:
+  image_path: assets/foreground.png
+  platforms:
+    android:
+      enable: false
+    ios:
+      enable: true
+      image_path: assets/logo.png
+    web:
+      enable: false
+    macos:
+      enable: true
+    windows:
+      enable: true
+    linux:
+      enable: true
