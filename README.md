@@ -1,5 +1,7 @@
 # MultiTally for Feelworld
 
+### If you find this app useful, consider supporting me by [buying a coffee](https://revolut.me/redyau) ☕
+
 ## [Download for Android](https://play.google.com/store/apps/details?id=pro.fodor.multitally) // [Download for iOS](https://apps.apple.com/us/app/multitally-for-feelworld/id6475365854)
 
 This is an unofficial Tally Light app for Feelworld devices.
